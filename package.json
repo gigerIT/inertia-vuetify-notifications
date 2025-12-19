@@ -1,7 +1,7 @@
 {
     "name": "@gigerit/inertia-vuetify-notifications",
     "version": "1.0.2",
-    "description": "Display Inertia.js flash messages using Vuetify snackbars",
+    "description": "Display Inertia flash messages using Vuetify snackbars",
     "type": "module",
     "main": "./dist/index.cjs",
     "module": "./dist/index.js",
