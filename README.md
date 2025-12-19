@@ -5,7 +5,7 @@ Display Inertia.js v2 flash messages as Vuetify snackbar notifications with supp
 ## Installation
 
 ```bash
-npm install inertia-vuetify-notifications
+npm install @gigerit/inertia-vuetify-notifications
 ```
 
 ### Peer Dependencies

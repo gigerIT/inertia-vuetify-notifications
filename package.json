@@ -1,5 +1,5 @@
 {
-    "name": "inertia-vuetify-notifications",
+    "name": "@gigerit/inertia-vuetify-notifications",
     "version": "0.1.0",
     "description": "Display Inertia.js flash messages using Vuetify snackbars",
     "type": "module",
@@ -48,6 +48,6 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/your-username/inertia-vuetify-notifications"
+        "url": "git+https://github.com/your-username/inertia-vuetify-notifications.git"
     }
 }
