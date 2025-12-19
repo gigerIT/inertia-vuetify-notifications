@@ -48,6 +48,6 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/gigerIT/inertia-vuetify-notifications"
+        "url": "git+https://github.com/gigerIT/inertia-vuetify-notifications.git"
     }
 }
