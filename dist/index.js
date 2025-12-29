@@ -1,5 +1,5 @@
-import { inject as k, ref as x, defineComponent as _, createBlock as m, openBlock as d, unref as c, isRef as C, withCtx as g, createElementBlock as v, createCommentVNode as h, Fragment as V, renderList as M, createTextVNode as E, toDisplayString as j, normalizeProps as I, mergeProps as L } from "vue";
-import { router as P } from "@inertiajs/vue3";
+import { inject as k, ref as x, defineComponent as _, createBlock as m, openBlock as d, unref as c, isRef as C, withCtx as g, createElementBlock as v, createCommentVNode as h, Fragment as V, renderList as M, createTextVNode as E, toDisplayString as j, mergeProps as I } from "vue";
+import { router as L } from "@inertiajs/vue3";
 import { VSnackbarQueue as T, VBtn as N } from "vuetify/components";
 function F(o) {
   return "name" in o && typeof o.name == "string";
@@ -22,7 +22,7 @@ const A = /* @__PURE__ */ Symbol("inertia-vuetify-notifications"), y = {
     info: "info"
   }
 };
-function S(o = {}) {
+function P(o = {}) {
   const n = {
     ...y,
     ...o,
@@ -65,7 +65,7 @@ function S(o = {}) {
       e ? await e(t.payload) : console.warn(`[inertia-vuetify-notifications] No handler registered for action: ${t.name}`);
     } else if (O(t)) {
       const e = t.method.toLowerCase();
-      P.visit(t.url, {
+      L.visit(t.url, {
         method: e,
         data: t.data
       });
@@ -80,7 +80,7 @@ function S(o = {}) {
     options: n
   };
 }
-function B() {
+function S() {
   const o = k(A);
   if (!o)
     throw new Error(
@@ -88,7 +88,7 @@ function B() {
     );
   return o;
 }
-function D(o, n) {
+function B(o, n) {
   for (const s of n.options.flashKeys) {
     const r = o[s];
     r != null && n.notify(r, s);
@@ -97,7 +97,7 @@ function D(o, n) {
 function K(o = {}) {
   return {
     install(n) {
-      const s = S(o);
+      const s = P(o);
       n.provide(A, s);
       let r = null;
       document.addEventListener("inertia:before", () => {
@@ -106,7 +106,7 @@ function K(o = {}) {
         const a = u.detail.page?.flash;
         if (!a || typeof a != "object" || Object.keys(a).length === 0) return;
         const l = JSON.stringify(a);
-        l !== r && (r = l, D(a, s));
+        l !== r && (r = l, B(a, s));
       }));
     }
   };
@@ -114,7 +114,7 @@ function K(o = {}) {
 const R = /* @__PURE__ */ _({
   __name: "NotificationProvider",
   setup(o) {
-    const { queue: n, executeAction: s, options: r } = B();
+    const { queue: n, executeAction: s, options: r } = S();
     function u(i) {
       return typeof i == "object" && i !== null && "actions" in i && Array.isArray(i.actions) && i.actions.length > 0;
     }
@@ -139,14 +139,14 @@ const R = /* @__PURE__ */ _({
           key: w,
           variant: "text",
           size: "small",
-          onClick: (U) => l(b)
+          onClick: (D) => l(b)
         }, {
           default: g(() => [
             E(j(a(b)), 1)
           ]),
           _: 2
         }, 1032, ["onClick"]))), 128)) : h("", !0),
-        p(e) ? (d(), m(c(N), I(L({ key: 1 }, f)), null, 16)) : h("", !0)
+        p(e) ? (d(), m(c(N), I({ key: 1 }, f, { icon: "mdi-close" }), null, 16)) : h("", !0)
       ]),
       _: 1
     }, 8, ["modelValue", "location", "closable", "timeout"]));
@@ -157,5 +157,5 @@ export {
   K as inertiaVuetifyNotifications,
   F as isNamedAction,
   O as isUrlAction,
-  B as useNotifications
+  S as useNotifications
 };

@@ -58,9 +58,9 @@ onMounted(() => {
         }
     });
 
-    registerAction('dismiss', () => {
-        // Just dismiss - the notification auto-closes when action is clicked
-    });
+    // registerAction('dismiss', () => {
+    //     // Just dismiss - the notification auto-closes when action is clicked
+    // });
 
     registerAction('view-details', (payload) => {
         alert(`Viewing details for item: ${JSON.stringify(payload)}`);
@@ -69,7 +69,7 @@ onMounted(() => {
 
 onUnmounted(() => {
     unregisterAction('undo-delete');
-    unregisterAction('dismiss');
+    // unregisterAction('dismiss');
     unregisterAction('view-details');
 });
 
@@ -117,15 +117,15 @@ function showCustomType() {
 }
 
 // Action notification demos
-function showWithDismissAction() {
-    notify({
-        message: 'Notification with dismiss action',
-        type: 'info',
-        actions: [
-            { label: 'Got it', name: 'dismiss' },
-        ],
-    });
-}
+// function showWithDismissAction() {
+//     notify({
+//         message: 'Notification with dismiss action',
+//         type: 'info',
+//         actions: [
+//             { label: 'Got it', name: 'dismiss' },
+//         ],
+//     });
+// }
 
 function showWithMultipleActions() {
     const id = itemIdCounter.value++;

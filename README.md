@@ -2,6 +2,10 @@
 
 Display Inertia flash messages as Vuetify snackbar notifications with support for actions.
 
+![Inertia Vuetify Notifications](./docs/screenshots/example1.png)
+![Inertia Vuetify Notifications](./docs/screenshots/example2.png)
+
+
 ## Installation
 
 ```bash
@@ -162,7 +166,7 @@ onUnmounted(() => {
 
 #### Manual Notifications
 
-Trigger notifications programmatically from any component:
+Trigger client side notifications programmatically from any component:
 
 ```vue
 <script setup lang="ts">
