@@ -1,6 +1,7 @@
 import '../css/app.css';
 
 import { createInertiaApp } from '@inertiajs/vue3';
+import { inertiaVuetifyNotifications } from '@inertia-vuetify/notifications';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
@@ -15,6 +16,20 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(vuetify)
+            .use(inertiaVuetifyNotifications({
+                defaults: {
+                    timeout: 5000,
+                    closable: true,
+                    location: 'bottom end',
+                },
+                actions: {
+                    // Global action handler example
+                    'global-action': (payload) => {
+                        console.log('Global action triggered with payload:', payload);
+                        alert(`Global action executed! Payload: ${JSON.stringify(payload)}`);
+                    },
+                },
+            }))
             .mount(el);
     },
     progress: {
