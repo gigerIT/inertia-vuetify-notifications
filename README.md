@@ -88,6 +88,8 @@ Inertia::flash('warning', 'Please review your input');
 Inertia::flash('info', 'New features available');
 ```
 
+For more information, see the [Inertia Flash Data documentation](https://inertiajs.com/docs/v2/data-props/flash-data).
+
 #### Structured Notifications
 
 For more control, pass an object with additional options:
