@@ -3,6 +3,7 @@ import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 
 export default defineConfig({
     plugins: [
@@ -14,11 +15,11 @@ export default defineConfig({
         tailwindcss(),
         vue({
             template: {
-                transformAssetUrls: {
-                    base: null,
-                    includeAbsolute: false,
-                },
+                transformAssetUrls,
             },
+        }),
+        vuetify({
+            autoImport: true,
         }),
         wayfinder({
             formVariants: true,
