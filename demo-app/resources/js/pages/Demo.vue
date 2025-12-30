@@ -247,7 +247,7 @@ function showBurst() {
                             variant="tonal"
                             density="compact"
                         >
-                            <strong>Queue Status:</strong> {{ queueCount }} notification{{ queueCount === 1 ? '' : 's' }} in queue
+                            <span class="font-weight-bold mr-1">{{ queueCount }}</span> Notification{{ queueCount === 1 ? '' : 's' }} in queue
                         </v-alert>
                     </v-col>
                 </v-row>
@@ -255,17 +255,15 @@ function showBurst() {
                 <!-- Inertia Flash Messages (Main Feature) -->
                 <v-row class="mb-6">
                     <v-col cols="12">
-                        <v-card color="primary" variant="tonal">
-                            <v-card-title class="d-flex align-center">
-                                <v-icon class="mr-2">mdi-server</v-icon>
+                        <v-card >
+                            <v-card-title class="d-flex align-center" prepend-icon="mdi-server-network">
                                 Inertia Flash Messages
-                                <v-chip class="ml-2" size="small" color="primary" variant="flat">Main Feature</v-chip>
                             </v-card-title>
                             <v-card-subtitle>
                                 Backend-triggered notifications using Inertia::flash() — the core functionality of this package
                             </v-card-subtitle>
                             <v-card-text>
-                                <v-alert type="info" variant="outlined" density="compact" class="mb-4">
+                                <v-alert type="info" variant="tonal" density="compact" class="mb-4">
                                     <div class="d-flex align-center">
                                         <span>These buttons send POST requests to Laravel. The backend uses <code>Inertia::flash()</code> to send notifications.</span>
                                     </div>
@@ -389,7 +387,6 @@ Inertia::flash('notification', [
                     <v-col cols="12" md="6">
                         <v-card>
                             <v-card-title class="d-flex align-center">
-                                <v-icon class="mr-2" color="primary">mdi-flash</v-icon>
                                 Client-side Flash (Inertia)
                             </v-card-title>
                             <v-card-subtitle>
@@ -445,7 +442,6 @@ router.flash('notification', { message: '...', type: 'info' })
                     <v-col cols="12" md="6">
                         <v-card>
                             <v-card-title class="d-flex align-center">
-                                <v-icon class="mr-2" color="secondary">mdi-bell</v-icon>
                                 Client-side Notifications (Composable)
                             </v-card-title>
                             <v-card-subtitle>
