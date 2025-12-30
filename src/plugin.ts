@@ -11,6 +11,13 @@ interface InertiaSuccessEvent extends CustomEvent {
   }
 }
 
+// Type for Inertia flash event (client-side flash via router.flash())
+interface InertiaFlashEvent extends CustomEvent {
+  detail: {
+    flash: Record<string, unknown>
+  }
+}
+
 /**
  * Process flash data and add notifications to queue
  */
@@ -46,8 +53,7 @@ export function inertiaVuetifyNotifications(options: NotificationPluginOptions =
         lastProcessedFlashKey = null
       })
 
-      // Only listen to success events - this is the reliable way to get flash data
-      // The inertia:flash event may not fire in all cases
+      // Listen to success events for server-side flash data
       document.addEventListener('inertia:success', ((event: InertiaSuccessEvent) => {
         const flash = event.detail.page?.flash
         if (!flash || typeof flash !== 'object' || Object.keys(flash).length === 0) return
@@ -59,6 +65,14 @@ export function inertiaVuetifyNotifications(options: NotificationPluginOptions =
           lastProcessedFlashKey = flashKey
           processFlashData(flash, context)
         }
+      }) as EventListener)
+
+      // Listen to flash events for client-side flash via router.flash()
+      document.addEventListener('inertia:flash', ((event: InertiaFlashEvent) => {
+        const flash = event.detail.flash
+        if (!flash || typeof flash !== 'object' || Object.keys(flash).length === 0) return
+
+        processFlashData(flash, context)
       }) as EventListener)
     },
   }
