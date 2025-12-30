@@ -18,7 +18,7 @@ const DEFAULT_OPTIONS: Required<NotificationPluginOptions> = {
   defaults: {
     timeout: 5000,
     closable: true,
-    location: 'top middle',
+    location: 'top',
   },
   actions: {},
   colorMap: {

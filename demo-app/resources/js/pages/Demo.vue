@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { NotificationProvider, useNotifications } from '@inertia-vuetify/notifications';
 import { router } from '@inertiajs/vue3';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 
 const { notify, registerAction, unregisterAction, queue, options } = useNotifications();
+const queueCount = computed(() => queue.value.length);
 
 // Backend flash demo state
 const isFlashing = ref(false);
@@ -88,6 +89,23 @@ function showWarning() {
 
 function showInfo() {
     notify('New features are now available!', 'info');
+}
+
+// Inertia client-side flash demos (no server request)
+function inertiaFlashFooBar() {
+    router.flash('foo', 'bar');
+}
+
+function inertiaFlashSuccess() {
+    router.flash('success', 'Client-side flash via Inertia router.flash()');
+}
+
+function inertiaFlashStructured() {
+    router.flash('notification', {
+        message: 'Structured client-side flash via router.flash()',
+        type: 'info',
+        timeout: 5000,
+    });
 }
 
 // Structured notification demos
@@ -225,11 +243,11 @@ function showBurst() {
                 <v-row class="mb-6">
                     <v-col cols="12">
                         <v-alert
-                            :type="queue.length > 0 ? 'info' : 'success'"
+                            :type="queueCount > 0 ? 'info' : 'success'"
                             variant="tonal"
                             density="compact"
                         >
-                            <strong>Queue Status:</strong> {{ queue.length }} notification{{ queue.length === 1 ? '' : 's' }} in queue
+                            <strong>Queue Status:</strong> {{ queueCount }} notification{{ queueCount === 1 ? '' : 's' }} in queue
                         </v-alert>
                     </v-col>
                 </v-row>
@@ -366,16 +384,72 @@ Inertia::flash('notification', [
                     </v-col>
                 </v-row>
 
-                <!-- Simple Notifications -->
+                <!-- Client-side notifications: Inertia way vs Composable way -->
                 <v-row>
                     <v-col cols="12" md="6">
                         <v-card>
                             <v-card-title class="d-flex align-center">
-                                <v-icon class="mr-2" color="primary">mdi-message-text</v-icon>
-                                Client Side Notifications
+                                <v-icon class="mr-2" color="primary">mdi-flash</v-icon>
+                                Client-side Flash (Inertia)
                             </v-card-title>
                             <v-card-subtitle>
-                                Basic notifications using flash keys that map to colors
+                                Uses Inertia v2 <code>router.flash()</code> (no server request)
+                            </v-card-subtitle>
+                            <v-card-text>
+                                <v-row dense>
+                                    <v-col cols="12">
+                                        <v-btn
+                                            color="primary"
+                                            variant="tonal"
+                                            block
+                                            @click="inertiaFlashFooBar"
+                                        >
+                                            <v-icon start>mdi-code-tags</v-icon>
+                                            router.flash('foo', 'bar')
+                                        </v-btn>
+                                    </v-col>
+                                    <v-col cols="12">
+                                        <v-btn
+                                            color="success"
+                                            variant="tonal"
+                                            block
+                                            @click="inertiaFlashSuccess"
+                                        >
+                                            <v-icon start>mdi-check-circle</v-icon>
+                                            Flash Success
+                                        </v-btn>
+                                    </v-col>
+                                    <v-col cols="12">
+                                        <v-btn
+                                            color="info"
+                                            variant="tonal"
+                                            block
+                                            @click="inertiaFlashStructured"
+                                        >
+                                            <v-icon start>mdi-cog</v-icon>
+                                            Flash Structured
+                                        </v-btn>
+                                    </v-col>
+                                </v-row>
+                            </v-card-text>
+                            <v-card-text class="pt-0">
+                                <v-code class="d-block pa-3 text-caption">
+router.flash('foo', 'bar')
+router.flash('success', '...')
+router.flash('notification', { message: '...', type: 'info' })
+                                </v-code>
+                            </v-card-text>
+                        </v-card>
+                    </v-col>
+
+                    <v-col cols="12" md="6">
+                        <v-card>
+                            <v-card-title class="d-flex align-center">
+                                <v-icon class="mr-2" color="secondary">mdi-bell</v-icon>
+                                Client-side Notifications (Composable)
+                            </v-card-title>
+                            <v-card-subtitle>
+                                Directly call <code>notify()</code> via <code>useNotifications()</code>
                             </v-card-subtitle>
                             <v-card-text>
                                 <v-row dense>
@@ -423,28 +497,6 @@ Inertia::flash('notification', [
                                             Info
                                         </v-btn>
                                     </v-col>
-                                </v-row>
-                            </v-card-text>
-                            <v-card-text class="pt-0">
-                                <v-code class="d-block pa-3 text-caption">
-notify('Operation completed!', 'success')
-                                </v-code>
-                            </v-card-text>
-                        </v-card>
-                    </v-col>
-
-                    <!-- Structured Notifications -->
-                    <v-col cols="12" md="6">
-                        <v-card>
-                            <v-card-title class="d-flex align-center">
-                                <v-icon class="mr-2" color="secondary">mdi-cog</v-icon>
-                                Structured Client Side Notifications
-                            </v-card-title>
-                            <v-card-subtitle>
-                                Custom timeout, closable, and type options
-                            </v-card-subtitle>
-                            <v-card-text>
-                                <v-row dense>
                                     <v-col cols="12">
                                         <v-btn 
                                             color="info" 
@@ -482,6 +534,7 @@ notify('Operation completed!', 'success')
                             </v-card-text>
                             <v-card-text class="pt-0">
                                 <v-code class="d-block pa-3 text-caption">
+notify('Operation completed!', 'success')
 notify({ message: '...', type: 'info', timeout: 10000 })
                                 </v-code>
                             </v-card-text>
