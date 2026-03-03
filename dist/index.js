@@ -1,18 +1,18 @@
-import { inject as k, ref as x, defineComponent as _, createBlock as m, openBlock as d, unref as c, isRef as C, withCtx as g, createElementBlock as v, createCommentVNode as h, Fragment as V, renderList as M, createTextVNode as E, toDisplayString as j, mergeProps as I } from "vue";
-import { router as L } from "@inertiajs/vue3";
-import { VSnackbarQueue as T, VBtn as N } from "vuetify/components";
-function F(o) {
+import { router as b } from "@inertiajs/vue3";
+import { inject as x, ref as _, defineComponent as C, openBlock as d, createBlock as m, unref as c, isRef as V, withCtx as h, createElementBlock as M, Fragment as v, renderList as j, createTextVNode as I, toDisplayString as T, createCommentVNode as N, mergeProps as E } from "vue";
+import { VSnackbarQueue as F, VBtn as A } from "vuetify/components";
+function O(o) {
   return "name" in o && typeof o.name == "string";
 }
-function O(o) {
+function P(o) {
   return "url" in o && "method" in o;
 }
-const A = /* @__PURE__ */ Symbol("inertia-vuetify-notifications"), y = {
+const w = /* @__PURE__ */ Symbol("inertia-vuetify-notifications"), y = {
   flashKeys: ["success", "error", "warning", "info", "notification"],
   defaults: {
     timeout: 5e3,
     closable: !0,
-    location: "bottom"
+    location: "top"
   },
   actions: {},
   colorMap: {
@@ -22,14 +22,14 @@ const A = /* @__PURE__ */ Symbol("inertia-vuetify-notifications"), y = {
     info: "info"
   }
 };
-function P(o = {}) {
+function S(o = {}) {
   const n = {
     ...y,
     ...o,
     defaults: { ...y.defaults, ...o.defaults },
     colorMap: { ...y.colorMap, ...o.colorMap },
     actions: { ...o.actions }
-  }, s = x([]), r = /* @__PURE__ */ new Map();
+  }, s = _([]), r = /* @__PURE__ */ new Map();
   for (const [t, e] of Object.entries(n.actions))
     r.set(t, e);
   function u(t, e) {
@@ -60,12 +60,12 @@ function P(o = {}) {
     r.delete(t);
   }
   async function i(t) {
-    if (F(t)) {
+    if (O(t)) {
       const e = r.get(t.name);
       e ? await e(t.payload) : console.warn(`[inertia-vuetify-notifications] No handler registered for action: ${t.name}`);
-    } else if (O(t)) {
+    } else if (P(t)) {
       const e = t.method.toLowerCase();
-      L.visit(t.url, {
+      b.visit(t.url, {
         method: e,
         data: t.data
       });
@@ -80,15 +80,15 @@ function P(o = {}) {
     options: n
   };
 }
-function S() {
-  const o = k(A);
+function B() {
+  const o = x(w);
   if (!o)
     throw new Error(
       "[inertia-vuetify-notifications] useNotifications() must be used within a component tree that has the notification plugin installed. Did you forget to call app.use(inertiaVuetifyNotifications())?"
     );
   return o;
 }
-function B(o, n) {
+function D(o, n) {
   for (const s of n.options.flashKeys) {
     const r = o[s];
     r != null && n.notify(r, s);
@@ -97,24 +97,24 @@ function B(o, n) {
 function K(o = {}) {
   return {
     install(n) {
-      const s = P(o);
-      n.provide(A, s);
+      const s = S(o);
+      n.provide(w, s);
       let r = null;
-      document.addEventListener("inertia:before", () => {
+      b.on("before", () => {
         r = null;
-      }), document.addEventListener("inertia:success", ((u) => {
-        const a = u.detail.page?.flash;
+      }), b.on("flash", (u) => {
+        const a = u.detail.flash;
         if (!a || typeof a != "object" || Object.keys(a).length === 0) return;
         const l = JSON.stringify(a);
-        l !== r && (r = l, B(a, s));
-      }));
+        l !== r && (r = l, D(a, s));
+      });
     }
   };
 }
-const R = /* @__PURE__ */ _({
+const R = /* @__PURE__ */ C({
   __name: "NotificationProvider",
   setup(o) {
-    const { queue: n, executeAction: s, options: r } = S();
+    const { queue: n, executeAction: s, options: r } = B();
     function u(i) {
       return typeof i == "object" && i !== null && "actions" in i && Array.isArray(i.actions) && i.actions.length > 0;
     }
@@ -127,26 +127,26 @@ const R = /* @__PURE__ */ _({
     function p(i) {
       return typeof i == "string" ? !0 : typeof i == "object" && i !== null && "closable" in i ? i.closable !== !1 : !0;
     }
-    return (i, t) => (d(), m(c(T), {
+    return (i, t) => (d(), m(c(F), {
       modelValue: c(n),
-      "onUpdate:modelValue": t[0] || (t[0] = (e) => C(n) ? n.value = e : null),
+      "onUpdate:modelValue": t[0] || (t[0] = (e) => V(n) ? n.value = e : null),
       location: c(r).defaults.location,
       closable: c(r).defaults.closable,
       timeout: c(r).defaults.timeout
     }, {
-      actions: g(({ item: e, props: f }) => [
-        u(e) ? (d(!0), v(V, { key: 0 }, M(e.actions, (b, w) => (d(), m(c(N), {
-          key: w,
+      actions: h(({ item: e, props: f }) => [
+        u(e) ? (d(!0), M(v, { key: 0 }, j(e.actions, (g, k) => (d(), m(c(A), {
+          key: k,
           variant: "text",
           size: "small",
-          onClick: (D) => l(b)
+          onClick: (L) => l(g)
         }, {
-          default: g(() => [
-            E(j(a(b)), 1)
+          default: h(() => [
+            I(T(a(g)), 1)
           ]),
           _: 2
-        }, 1032, ["onClick"]))), 128)) : h("", !0),
-        p(e) ? (d(), m(c(N), I({ key: 1 }, f, { icon: "mdi-close" }), null, 16)) : h("", !0)
+        }, 1032, ["onClick"]))), 128)) : N("", !0),
+        p(e) ? (d(), m(c(A), E({ key: 1 }, f, { icon: "mdi-close" }), null, 16)) : N("", !0)
       ]),
       _: 1
     }, 8, ["modelValue", "location", "closable", "timeout"]));
@@ -155,7 +155,7 @@ const R = /* @__PURE__ */ _({
 export {
   R as NotificationProvider,
   K as inertiaVuetifyNotifications,
-  F as isNamedAction,
-  O as isUrlAction,
-  S as useNotifications
+  O as isNamedAction,
+  P as isUrlAction,
+  B as useNotifications
 };

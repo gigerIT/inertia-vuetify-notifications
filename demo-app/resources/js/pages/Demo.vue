@@ -268,7 +268,7 @@ function showBurst() {
                                         <span>These buttons send POST requests to Laravel. The backend uses <code>Inertia::flash()</code> to send notifications.</span>
                                     </div>
                                 </v-alert>
-                                <v-row dense>
+                                <v-row density="compact">
                                     <v-col cols="6" sm="4" md="2">
                                         <v-btn 
                                             color="success" 
@@ -342,7 +342,7 @@ function showBurst() {
                                         </v-btn>
                                     </v-col>
                                 </v-row>
-                                <v-row dense class="mt-2">
+                                <v-row density="compact" class="mt-2">
                                     <v-col cols="12" sm="6" md="4">
                                         <v-btn 
                                             color="primary" 
@@ -393,7 +393,7 @@ Inertia::flash('notification', [
                                 Uses Inertia v2 <code>router.flash()</code> (no server request)
                             </v-card-subtitle>
                             <v-card-text>
-                                <v-row dense>
+                                <v-row density="compact">
                                     <v-col cols="12">
                                         <v-btn
                                             color="primary"
@@ -448,7 +448,7 @@ router.flash('notification', { message: '...', type: 'info' })
                                 Directly call <code>notify()</code> via <code>useNotifications()</code>
                             </v-card-subtitle>
                             <v-card-text>
-                                <v-row dense>
+                                <v-row density="compact">
                                     <v-col cols="6">
                                         <v-btn 
                                             color="success" 
@@ -554,7 +554,7 @@ notify({ message: '...', type: 'info', timeout: 10000 })
                                     <strong>Current Position:</strong> {{ options.defaults.location }}
                                     <span class="text-caption ml-2">(configured in app.ts)</span>
                                 </v-alert>
-                                <v-row dense>
+                                <v-row density="compact">
                                     <v-col cols="4" sm="2">
                                         <v-btn 
                                             color="teal" 

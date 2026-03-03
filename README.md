@@ -17,7 +17,7 @@ npm install @inertia-vuetify/notifications
 This package requires the following peer dependencies:
 
 - `vue` ^3.4.0
-- `vuetify` ^3.7.0
+- `vuetify` ^4.0.0
 - `@inertiajs/vue3` ^2.0.0 (with flash event support, v2.3.3+)
 
 ## Setup
