@@ -2,9 +2,18 @@
 import { NotificationProvider, useNotifications } from '@inertia-vuetify/notifications';
 import { router } from '@inertiajs/vue3';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { useTheme } from 'vuetify';
 
 const { notify, registerAction, unregisterAction, queue, options } = useNotifications();
 const queueCount = computed(() => queue.value.length);
+const theme = useTheme();
+const isDarkTheme = computed(() => theme.global.current.value.dark);
+const themeToggleIcon = computed(() => (isDarkTheme.value ? 'mdi-weather-sunny' : 'mdi-weather-night'));
+const themeToggleLabel = computed(() => (isDarkTheme.value ? 'Switch to light mode' : 'Switch to dark mode'));
+
+function toggleTheme() {
+    theme.global.name.value = isDarkTheme.value ? 'light' : 'dark';
+}
 
 // Backend flash demo state
 const isFlashing = ref(false);
@@ -223,6 +232,18 @@ function showBurst() {
                 <v-icon class="mr-2">mdi-bell-ring</v-icon>
                 Inertia Vuetify Notifications Demo
             </v-app-bar-title>
+
+            <template #append>
+                <v-btn
+                    :aria-label="themeToggleLabel"
+                    :title="themeToggleLabel"
+                    icon
+                    variant="text"
+                    @click="toggleTheme"
+                >
+                    <v-icon>{{ themeToggleIcon }}</v-icon>
+                </v-btn>
+            </template>
         </v-app-bar>
 
         <v-main>
